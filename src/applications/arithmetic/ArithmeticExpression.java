@@ -14,7 +14,7 @@ import java.io.IOException;
 public class ArithmeticExpression {
 
     /** Provide the full path to the input file. */
-    private static final String INPUT_PATH = "";
+    private static final String INPUT_PATH = "./examples.txt";
 
     /** The Dyck word around which we are wrapping. */
     private DyckWord expression;
