@@ -15,7 +15,7 @@ public class DyckWord {
     }
 
     private static boolean isDyckWord(String word) {
-        // todo
+        return true;
     }
 
     public String getWord() {
