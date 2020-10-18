@@ -11,6 +11,19 @@ public class Stack<E> implements LIFOQueue<E> {
         size = 0;
     }
 
+    @SuppressWarnings("StringConcatenationInLoop")
+    @Override
+    public String toString() {
+        String output = "";
+        SNode<E> curr = topNode;
+        while (curr != null) {
+            output += (curr.getData() + " ");
+            curr = curr.getNext();
+        }
+
+        return output;
+    }
+
     @Override
     public E pop() {
         if (size == 0)
