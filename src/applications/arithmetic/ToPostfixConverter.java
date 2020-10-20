@@ -4,7 +4,25 @@ import datastructures.sequential.Stack;
 
 public class ToPostfixConverter implements Converter {
     public String convert(ArithmeticExpression expression) {
-        return nextToken("1+2+3+45+83151.0+10", 6);
+        StringBuilder postfixExp = new StringBuilder();
+
+        String s = expression.getExpression();
+        int i = 0;
+        while (i < s.length()) {
+            Stack<String> stack = new Stack<>();
+            String token = nextToken(s, i);
+            System.out.println(token);
+            if (isOperand(token)) {
+                postfixExp.append(token);
+                postfixExp.append(" ");
+            } else if (Operator.isOperator(token) || Brackets.isLeftBracket(token)) {
+                stack.push(token);
+            }
+
+            i += token.length();
+        }
+
+        return postfixExp.toString();
     }
 
     // This function assumes whatever uses it will call it only at the start of a token.
@@ -16,7 +34,8 @@ public class ToPostfixConverter implements Converter {
         while (start < s.length() && isOperand(charAtIdx)) {
             token.append(charAtIdx.charAt(0)); // 1 character string anyway
             start++;
-            charAtIdx = s.substring(start, start + 1); // set character to next in the string
+            if (start < s.length()) // prevent index out of bounds
+                charAtIdx = s.substring(start, start + 1); // set character to next in the string
         }
 
         return token.build();
