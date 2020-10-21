@@ -21,7 +21,7 @@ public class ToPostfixConverter implements Converter {
                     exp.append(" ");
                 }
 
-                 stack.pop(); // left parenthesis, simply pop
+                 stack.pop(); // left parenthesis remains, simply pop
             } else { // is an operator
                 while (!stack.isEmpty() && Operator.of(token).getRank() >= Operator.of(stack.peek()).getRank()) {
                     exp.append(stack.pop());
@@ -45,15 +45,7 @@ public class ToPostfixConverter implements Converter {
     // This function assumes whatever uses it will call it only at the start of a token.
     public String nextToken(String s, int start) {
         String charAtIdx = s.substring(start, start + 1);
-        if (!isOperand(charAtIdx)) {
-        if (Brackets.isLeftBracket(charAtIdx))
-            return Character.toString(Brackets.LEFT_PARENTHESIS.getSymbol());
-
-        else if (Brackets.isRightBracket(charAtIdx))
-                return Character.toString(Brackets.RIGHT_PARENTHESIS.getSymbol());
-
-        return charAtIdx; // operators and parens can be 1 character long only so just return
-        }
+        if (!isOperand(charAtIdx)) return charAtIdx; // operators and parens can be 1 character long only so just return
 
         TokenBuilder token = new TokenBuilder(); // is a number, might be more than 1 character long
         while (start < s.length() && isOperand(charAtIdx)) {
