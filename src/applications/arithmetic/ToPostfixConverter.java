@@ -4,31 +4,56 @@ import datastructures.sequential.Stack;
 
 public class ToPostfixConverter implements Converter {
     public String convert(ArithmeticExpression expression) {
-        StringBuilder postfixExp = new StringBuilder();
-
+        StringBuilder exp = new StringBuilder();
+        Stack<String> stack = new Stack<>();
         String s = expression.getExpression();
+
         int i = 0;
         while (i < s.length()) {
-            Stack<String> stack = new Stack<>();
             String token = nextToken(s, i);
-            System.out.println(token);
             if (isOperand(token)) {
-                postfixExp.append(token);
-                postfixExp.append(" ");
-            } else if (Operator.isOperator(token) || Brackets.isLeftBracket(token)) {
-                stack.push(token);
+                exp.append(token);
+                exp.append(" ");
+            } else if (Brackets.isLeftBracket(token)) stack.push(token);
+            else if (Brackets.isRightBracket(token)) {
+                while (!stack.isEmpty() && !Brackets.isLeftBracket(stack.peek())) {
+                    exp.append(stack.pop()); // keep adding symbols to expression
+                    exp.append(" ");
+                }
+
+                 stack.pop(); // left parenthesis, simply pop
+            } else { // is an operator
+                while (!stack.isEmpty() && Operator.of(token).getRank() >= Operator.of(stack.peek()).getRank()) {
+                    exp.append(stack.pop());
+                    exp.append(" ");
+                }
+
+                stack.push(token); // higher precedence or stack is empty
             }
 
             i += token.length();
         }
 
-        return postfixExp.toString();
+        while (!stack.isEmpty()) {
+            exp.append(stack.pop()); // step 7
+            exp.append(" ");
+        }
+
+        return exp.toString();
     }
 
     // This function assumes whatever uses it will call it only at the start of a token.
     public String nextToken(String s, int start) {
         String charAtIdx = s.substring(start, start + 1);
-        if (!isOperand(charAtIdx)) return charAtIdx; // operators can be 1 character long only so just return
+        if (!isOperand(charAtIdx)) {
+        if (Brackets.isLeftBracket(charAtIdx))
+            return Character.toString(Brackets.LEFT_PARENTHESIS.getSymbol());
+
+        else if (Brackets.isRightBracket(charAtIdx))
+                return Character.toString(Brackets.RIGHT_PARENTHESIS.getSymbol());
+
+        return charAtIdx; // operators and parens can be 1 character long only so just return
+        }
 
         TokenBuilder token = new TokenBuilder(); // is a number, might be more than 1 character long
         while (start < s.length() && isOperand(charAtIdx)) {
