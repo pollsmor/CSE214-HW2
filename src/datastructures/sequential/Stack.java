@@ -2,6 +2,11 @@ package datastructures.sequential;
 
 import java.util.EmptyStackException;
 
+/**
+ * This class is a custom-made implementation of the Stack abstract data type, and is a dependency
+ * for many of the other classes in the applications.arithmetic package.
+ * @author Kevin Li
+ */
 public class Stack<E> implements LIFOQueue<E> {
     private SNode<E> topNode;
     private int size;
@@ -11,6 +16,7 @@ public class Stack<E> implements LIFOQueue<E> {
         size = 0;
     }
 
+    /*
     @SuppressWarnings("StringConcatenationInLoop")
     @Override
     public String toString() {
@@ -23,7 +29,14 @@ public class Stack<E> implements LIFOQueue<E> {
 
         return output;
     }
+     */
 
+    /**
+     * Retrieves and removes the element at the top of this stack.
+     *
+     * @return the element at the top of this stack.
+     * @throws EmptyStackException if the stack is empty.
+     */
     @Override
     public E pop() {
         if (size == 0)
@@ -39,6 +52,11 @@ public class Stack<E> implements LIFOQueue<E> {
         return data;
     }
 
+    /**
+     * Pushes the specified element onto the top of this stack.
+     *
+     * @param element the element to be pushed onto the top of this stack.
+     */
     @Override
     public void push(E element) {
         size++;
@@ -47,6 +65,12 @@ public class Stack<E> implements LIFOQueue<E> {
         topNode = newNode;
     }
 
+    /**
+     * Retrieves, but does not remove, the element at the top of this stack.
+     *
+     * @return the element at the top of this stack.
+     * @throws EmptyStackException if the stack is empty.
+     */
     @Override
     public E peek() {
         if (size == 0)
@@ -55,11 +79,19 @@ public class Stack<E> implements LIFOQueue<E> {
         return topNode.getData();
     }
 
+    /**
+     * Returns the number of elements in this sequence.
+     *
+     * @return the number of elements in this sequence
+     */
     @Override
     public int size() {
         return size;
     }
 
+    /**
+     * @return <code>true</code> if and only if the sequence contains no elements, <code>false</code> otherwise.
+     */
     @Override
     public boolean isEmpty() {
         return size == 0;

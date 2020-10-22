@@ -2,7 +2,19 @@ package applications.arithmetic;
 
 import datastructures.sequential.Stack;
 
+/**
+ * This class is an implementation of the Evaluator interface, specifically used for evaluating
+ * expression strings in postfix notation.
+ *
+ * @author Kevin Li
+ */
 public class PostfixEvaluator implements Evaluator {
+    /**
+     * Given a postfix expression, this method computes and returns the result.
+     *
+     * @param expressionString the given arithmetic expression as a string, in postfix notation
+     * @return the final computed value of the arithmetic expression
+     */
     public double evaluate(String expressionString) {
         ToPostfixConverter converter = new ToPostfixConverter();
         String[] elements = expressionString.split(" "); // split all the elements into an array

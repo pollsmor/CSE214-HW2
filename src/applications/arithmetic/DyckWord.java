@@ -16,7 +16,13 @@ public class DyckWord {
             throw new IllegalArgumentException(String.format("%s is not a valid Dyck word.", word));
     }
 
-    // I'd just like to note that this implementation leaves cases like "(3+{1+2})*()" through. I hope this is outside the scope of the assignment.
+    /**
+     * Determines whether or not a string is a valid Dyck word.
+     * I'd just like to note that this implementation leaves cases like "(3+{1+2})*()" through. I hope this is outside the scope of the assignment.
+     *
+     * @param word the given string
+     * @return <code>true</code> if the given string is a valid Dyck word, and <code>false</code> otherwise.
+     */
     private static boolean isDyckWord(String word) {
         Stack<Character> stack = new Stack<>(); // for storing all bracket characters
         for (int i = word.length() - 1; i >= 0; i--) { // go backwards as I want the leftmost brackets to be at the top of the stack

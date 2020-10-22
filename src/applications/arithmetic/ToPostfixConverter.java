@@ -2,7 +2,19 @@ package applications.arithmetic;
 
 import datastructures.sequential.Stack;
 
+/**
+ * This class is used for converting an expression string in infix notation to that of postfix
+ * notation, for easier evaluation.
+ *
+ * @author Kevin Li
+ */
 public class ToPostfixConverter implements Converter {
+    /**
+     * The fundamental method of this class, which converts an arithmetic expression from infix to postfix notation.
+     *
+     * @param expression  the given arithmetic expression
+     * @return the given arithmetic expression, converted into postfix notation
+     */
     public String convert(ArithmeticExpression expression) {
         StringBuilder exp = new StringBuilder();
         Stack<String> stack = new Stack<>();
@@ -42,7 +54,15 @@ public class ToPostfixConverter implements Converter {
         return exp.toString();
     }
 
-    // This function assumes whatever uses it will call it only at the start of a token.
+
+    /**
+     * Given a string and a specific index, this method returns the next token starting at that index.
+     * This function assumes whatever uses it will call it only at the start of a token.
+     *
+     * @param s     the given string
+     * @param start the given index
+     * @return the next token starting at the given index in the given string
+     */
     public String nextToken(String s, int start) {
         String charAtIdx = s.substring(start, start + 1);
         if (!isOperand(charAtIdx)) return charAtIdx; // operators and parens can be 1 character long only so just return
@@ -58,6 +78,12 @@ public class ToPostfixConverter implements Converter {
         return token.build();
     }
 
+    /**
+     * Determines whether or not a string is a valid operand.
+     *
+     * @param s the given string
+     * @return <code>true</code> if the given string is a valid operand, and <code>false</code> otherwise
+     */
     public boolean isOperand(String s) {
         return !Operator.isOperator(s) &&
                !Brackets.isLeftBracket(s) &&
