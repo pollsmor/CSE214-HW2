@@ -16,6 +16,7 @@ public class PostfixEvaluator implements Evaluator {
      * @return the final computed value of the arithmetic expression
      */
     public double evaluate(String expressionString) {
+        if (expressionString.equals("")) return 0; // edge case where infix expression is ()
         ToPostfixConverter converter = new ToPostfixConverter();
         String[] elements = expressionString.split(" "); // split all the elements into an array
         Stack<String> stack = new Stack<>();
