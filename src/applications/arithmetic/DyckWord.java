@@ -39,6 +39,7 @@ public class DyckWord {
             char c = stack.pop();
             if (Brackets.isLeftBracket(c)) {
                 stack2.push(c);
+                if (stack.isEmpty()) return false; // no corresponding right bracket to go along with
             } else {
                 if (stack2.isEmpty() || !Brackets.correspond(stack2.peek(), c))
                     return false; // right bracket with no left bracket to compare to, or brackets "types" don't match even when compared
